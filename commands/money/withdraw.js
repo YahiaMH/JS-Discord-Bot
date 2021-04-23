@@ -12,7 +12,7 @@ module.exports = {
         bank[targetId] = {
           bank: 0
         };
-        fs.writeFile("../bank.json", JSON.stringify(bank), (err) => {
+        fs.writeFile("./json/bank.json", JSON.stringify(bank), (err) => {
           if (err) console.log(err)
         });
       }
@@ -20,7 +20,7 @@ module.exports = {
         coins[targetId] = {
           coins: 0
         };
-        fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
+        fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
       }
@@ -31,13 +31,13 @@ module.exports = {
         coins[message.author.id] = {
         coins: coins[message.author.id].coins + args
           };
-          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
         bank[message.author.id] = {
         bank: bank[message.author.id].bank - args
           };
-          fs.writeFile("../bank.json", JSON.stringify(bank), (err) => {
+          fs.writeFile("./json/bank.json", JSON.stringify(bank), (err) => {
           if (err) console.log(err)
         });
         message.channel.send(args + ' Coins withdrew')
@@ -50,14 +50,14 @@ module.exports = {
         coins[message.author.id] = {
         coins: coins[message.author.id].coins + bank[message.author.id].bank
           };
-          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         }); 
         message.channel.send((bank[message.author.id].bank) + ' Coins withdrew')
         bank[message.author.id] = {
         bank: bank[message.author.id].bank - (bank[message.author.id].bank)
           };
-          fs.writeFile("../bank.json", JSON.stringify(bank), (err) => {
+          fs.writeFile("./json/bank.json", JSON.stringify(bank), (err) => {
           if (err) console.log(err)
         });
       }  

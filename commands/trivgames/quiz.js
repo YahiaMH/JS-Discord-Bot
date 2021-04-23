@@ -41,7 +41,7 @@ module.exports = {
           coins[message.author.id] = {
             coins: coins[message.author.id].coins + coinAmnt
           };
-          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
        var randomNum = Math.floor(Math.random() * 4)+1;
@@ -74,7 +74,7 @@ module.exports = {
           coins[message.author.id] = {
             coins: coins[message.author.id].coins - coinAmnt
           };
-          fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
         
@@ -110,7 +110,7 @@ module.exports = {
           coins[message.author.id] = {
             coins: coins[message.author.id].coins - 30
           };
-          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
        message.reply("You lost 30 coins for not answering in time")

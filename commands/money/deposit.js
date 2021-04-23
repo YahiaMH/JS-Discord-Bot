@@ -10,7 +10,7 @@ module.exports = {
         bank[message.author.id] = {
           bank: 0
         };
-        fs.writeFile("../bank.json", JSON.stringify(bank), (err) => {
+        fs.writeFile("./json/bank.json", JSON.stringify(bank), (err) => {
           if (err) console.log(err)
         });
       }
@@ -18,7 +18,7 @@ module.exports = {
         coins[message.author.id] = {
           coins: 0
         };
-        fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
+        fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
       }
@@ -30,14 +30,14 @@ module.exports = {
         coins[message.author.id] = {
         coins: coins[message.author.id].coins - args
           };
-          fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
 
         bank[message.author.id] = {
         bank: bank[message.author.id].bank + args
           };
-          fs.writeFile("../bank.json", JSON.stringify(bank), (err) => {
+          fs.writeFile("./json/bank.json", JSON.stringify(bank), (err) => {
           if (err) console.log(err)
         });
         message.channel.send(args + ' coins deposited to your bank')
@@ -49,14 +49,14 @@ module.exports = {
         bank[message.author.id] = {
         bank: bank[message.author.id].bank + (coins[message.author.id].coins)
           };
-          fs.writeFile("./bank.json", JSON.stringify(bank), (err) => {
+          fs.writeFile("./json/bank.json", JSON.stringify(bank), (err) => {
           if (err) console.log(err)
         });
         message.channel.send((coins[message.author.id].coins) + ' coins deposited to your bank')
         coins[message.author.id] = {
         coins: coins[message.author.id].coins - coins[message.author.id].coins
           };
-          fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         }); 
       }

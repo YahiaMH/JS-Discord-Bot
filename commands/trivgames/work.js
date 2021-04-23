@@ -10,7 +10,7 @@ module.exports = {
         coins[targetId] = {
           coins: 0
         };
-        fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
+        fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
       }
@@ -18,7 +18,7 @@ module.exports = {
         work[targetId] = {
           coins: 0
         };
-        fs.writeFile("../work.json", JSON.stringify(work), (err) => {
+        fs.writeFile("./json/work.json", JSON.stringify(work), (err) => {
           if (err) console.log(err)
         });
         // message.reply("What would you like to work as?");

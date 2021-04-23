@@ -71,7 +71,7 @@ module.exports = {
           coins[message.author.id] = {
             coins: coins[message.author.id].coins + coinAmnt
           };
-          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
 

@@ -12,7 +12,7 @@ module.exports = {
         coins[targetId] = {
           coins: 0
         };
-        fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
+        fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
       }
@@ -25,20 +25,20 @@ module.exports = {
         ball[targetId] = {
           ball: 0
         };
-        fs.writeFile("../8ball.json", JSON.stringify(ball), (err) => {
+        fs.writeFile("./json/8ball.json", JSON.stringify(ball), (err) => {
           if (err) console.log(err)
           });
         }
           coins[targetId] = {
             coins: authCoins - 2750
           };
-          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
         ball[message.author.id] = {
             ball: ball[message.author.id].ball + 1
           };
-          fs.writeFile("../8ball.json", JSON.stringify(ball), (err) => {
+          fs.writeFile("./json/8ball.json", JSON.stringify(ball), (err) => {
           if (err) console.log(err)
         });
         message.channel.send('You have successfully bought 8Ball');
@@ -54,20 +54,20 @@ module.exports = {
         lockpick[targetId] = {
           lockpick: 0
         };
-        fs.writeFile("../lockpick.json", JSON.stringify(lockpick), (err) => {
+        fs.writeFile("./json/lockpick.json", JSON.stringify(lockpick), (err) => {
           if (err) console.log(err)
           });
         }
           coins[targetId] = {
             coins: authCoins - 4500
           };
-          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
         lockpick[message.author.id] = {
             lockpick: lockpick[message.author.id].lockpick + 1
           };
-          fs.writeFile("../lockpick.json", JSON.stringify(lockpick), (err) => {
+          fs.writeFile("./json/lockpick.json", JSON.stringify(lockpick), (err) => {
           if (err) console.log(err)
         });
         message.channel.send('You have successfully bought a lockpick');
