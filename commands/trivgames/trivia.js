@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-let coins = require("../../coins.json");
+let coins = require("../../json/coins.json");
 const fs = require('fs').promises;
 const fetch = require("node-fetch");
 const talkedRecently = new Set();
@@ -7,7 +7,7 @@ const talkedRecently = new Set();
 module.exports = {
   run: async(client, message) => {
   if (talkedRecently.has(message.author.id)) {
-    message.channel.send("You can only do this every 15 seconds");
+    message.reply("You can only do this every 15 seconds");
     } else {
       const response = await fetch('https://opentdb.com/api.php?amount=50&difficulty=easy&type=multiple');
      const data = await response.json();
@@ -56,7 +56,7 @@ module.exports = {
 }
      const filter = m => m.author.id === message.author.id;
      try{
-            const answer = await message.channel.awaitMessages(filter, { max: 1, time: 12000, errors: ['time', 'max']});
+      const answer = await message.channel.awaitMessages(filter, { max: 1, time: 12000, errors: ['time', 'max']});
      const ans = answer.first();
      console.log("this is what was sent " + ans.content)
      console.log("this is the correct answer " + (randAnswer+1))
@@ -78,40 +78,40 @@ module.exports = {
        var randomNum = Math.floor(Math.random() * 4)+1;
        if (randomNum == 1)
        {
-        message.channel.send("That was the correct answer!");
-        message.channel.send("You got " + coinAmnt + " coins!");
+        message.reply("That was the correct answer!");
+        message.reply("You got " + coinAmnt + " coins!");
        }
        else if (randomNum == 2){
-         message.channel.send("Damn you are pretty smart, that was right!");
-         message.channel.send("You got " + coinAmnt + " coins!");
+         message.reply("Damn you are pretty smart, that was right!");
+         message.reply("You got " + coinAmnt + " coins!");
        }
        else if (randomNum == 3){
-         message.channel.send("Sheeeeesh! You got that right!");
-         message.channel.send("You got " + coinAmnt + " coins!");
+         message.reply("Sheeeeesh! You got that right!");
+         message.reply("You got " + coinAmnt + " coins!");
        }
        else{
-         message.channel.send("Your brain is humungous!")
-         message.channel.send("You got " + coinAmnt + " coins!");
+         message.reply("Your brain is humungous!")
+         message.reply("You got " + coinAmnt + " coins!");
        }
      }
      else {
        var randomNum = Math.floor(Math.random() * 4)+1;
        if (randomNum == 1)
        {
-        message.channel.send("LMAOOOO, what a fuckin retard");
+        message.reply("LMAOOOO, what a fuckin retard");
        }
        else if (randomNum == 2){
-         message.channel.send("Holy shit, how can one be so fucking stupid");
+         message.reply("Holy shit, how can one be so fucking stupid");
        }
        else if (randomNum == 3){
-         message.channel.send("That was the wrong answer fucking idiot");
+         message.reply("That was the wrong answer fucking idiot");
        }
        else{
-         message.channel.send("With that small brain of yours I wouldn't be surprised if you thought the world was flat");
+         message.reply("With that small brain of yours I wouldn't be surprised if you thought the world was flat");
        }
      }
      }catch(e){
-      message.channel.send("Why didn't you answer in time?")
+      message.reply("Why didn't you answer in time?")
      }
 
      talkedRecently.add(message.author.id);

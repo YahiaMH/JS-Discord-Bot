@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
-let ball = require("../../8ball.json");
-let lockpick = require("../../lockpick.json");
+let ball = require("../../json/8ball.json");
+let lockpick = require("../../json/lockpick.json");
 const fs = require('fs').promises;
 
 module.exports = {

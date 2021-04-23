@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
-let coins = require("../../coins.json");
-let bank = require("../../bank.json");
+let coins = require("../../json/coins.json");
+let bank = require("../../json/bank.json");
 const fs = require('fs').promises;
 
 module.exports = {

@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-let coins = require("../../coins.json");
+let coins = require("../../json/coins.json");
 const fs = require('fs').promises;
 const talkedRecently = new Set();
 
