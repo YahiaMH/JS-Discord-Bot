@@ -71,7 +71,7 @@ module.exports = {
           coins[message.author.id] = {
             coins: coins[message.author.id].coins + coinAmnt
           };
-          fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
 
@@ -79,19 +79,19 @@ module.exports = {
        if (randomNum == 1)
        {
         message.reply("That was the correct answer!");
-        message.reply("You got " + coinAmnt + " coins!");
+        message.channel.send("You got " + coinAmnt + " coins!");
        }
        else if (randomNum == 2){
          message.reply("Damn you are pretty smart, that was right!");
-         message.reply("You got " + coinAmnt + " coins!");
+         message.channel.send("You got " + coinAmnt + " coins!");
        }
        else if (randomNum == 3){
          message.reply("Sheeeeesh! You got that right!");
-         message.reply("You got " + coinAmnt + " coins!");
+         message.channel.send("You got " + coinAmnt + " coins!");
        }
        else{
          message.reply("Your brain is humungous!")
-         message.reply("You got " + coinAmnt + " coins!");
+         message.channel.send("You got " + coinAmnt + " coins!");
        }
      }
      else {

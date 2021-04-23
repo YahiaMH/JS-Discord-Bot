@@ -11,7 +11,7 @@ module.exports = {
         coins[targetId] = {
           coins: 0
         };
-        fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+        fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
       }
@@ -19,7 +19,7 @@ module.exports = {
         bank[targetId] = {
           bank: 0
         };
-        fs.writeFile("./bank.json", JSON.stringify(bank), (err) => {
+        fs.writeFile("../bank.json", JSON.stringify(bank), (err) => {
           if (err) console.log(err)
         });
       }

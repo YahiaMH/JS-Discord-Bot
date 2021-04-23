@@ -8,7 +8,7 @@ module.exports = {
     if (coins[message.author.id].coins < 75){
         message.channel.send('You need 75 coins in your wallet to play')
       }else{
-          if (talkedRecently.has(message.author.id)) {
+    if (talkedRecently.has(message.author.id)) {
     message.channel.send("You can only do this every 2 minutes");
     } else {
       var randNum = Math.floor(Math.random() * 30)+1;
@@ -49,7 +49,7 @@ module.exports = {
           coins[message.author.id] = {
             coins: coins[message.author.id].coins + coinAmnt
           };
-          fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
           break;
@@ -67,7 +67,7 @@ module.exports = {
           coins[message.author.id] = {
             coins: coins[message.author.id].coins + coinAmnt
           };
-          fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
           }
@@ -77,7 +77,7 @@ module.exports = {
           coins[message.author.id] = {
             coins: coins[message.author.id].coins + coinAmnt
           };
-          fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
           }
@@ -87,7 +87,7 @@ module.exports = {
           coins[message.author.id] = {
             coins: coins[message.author.id].coins - coinAmnt
           };
-          fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
           }

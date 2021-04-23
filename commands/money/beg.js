@@ -14,7 +14,7 @@ module.exports = {
           coins[message.author.id] = {
             coins: coins[message.author.id].coins + coinAmnt
           };
-          fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         message.channel.send("Alright I'll let you have some")
         message.channel.send(coinAmnt + " coins have been added to your total")

@@ -10,7 +10,7 @@ module.exports = {
         bank[message.author.id] = {
           bank: 0
         };
-        fs.writeFile("./bank.json", JSON.stringify(bank), (err) => {
+        fs.writeFile("../bank.json", JSON.stringify(bank), (err) => {
           if (err) console.log(err)
         });
       }
@@ -18,7 +18,7 @@ module.exports = {
         coins[message.author.id] = {
           coins: 0
         };
-        fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+        fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
       }
@@ -37,7 +37,7 @@ module.exports = {
         bank[message.author.id] = {
         bank: bank[message.author.id].bank + args
           };
-          fs.writeFile("./bank.json", JSON.stringify(bank), (err) => {
+          fs.writeFile("../bank.json", JSON.stringify(bank), (err) => {
           if (err) console.log(err)
         });
         message.channel.send(args + ' coins deposited to your bank')

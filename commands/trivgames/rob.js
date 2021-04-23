@@ -12,7 +12,7 @@ module.exports = {
         coins[targetId] = {
           coins: 0
         };
-        fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+        fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
       }
@@ -41,7 +41,7 @@ module.exports = {
         //     coins[targetId] = {
         //     coins: coins[targetId].coins - robbery
         //   };
-        //   fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+        //   fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
         //   if (err) console.log(err)
         // });
         // message.channel.send("You stole " + robbery +  " coins from <@" + targetId + ">!")
@@ -50,7 +50,7 @@ module.exports = {
         //   lockpick[message.author.id] = {
         //     lockpick: lockpick[message.author.id].lockpick - 1
         //   };
-        //   fs.writeFile("./lockpick.json", JSON.stringify(lockpick), (err) => {
+        //   fs.writeFile("../lockpick.json", JSON.stringify(lockpick), (err) => {
         //   if (err) console.log(err)
         // });
         //   message.channel.send('Your lockpick broke, unlucky')
@@ -63,14 +63,14 @@ module.exports = {
         // coins[targetId] = {
         //     coins: coins[targetId].coins + robbery
         //   };
-        //   fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+        //   fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
         //   if (err) console.log(err)
 
         // });
         //     coins[message.author.id] = {
         //     coins: coins[message.author.id].coins - robbery
         //   };
-        //   fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+        //   fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
         //   if (err) console.log(err)
         // });
         // message.channel.send("The robbery was unsuccessful you gave <@" + targetId + "> " + robbery +  " coins!")
@@ -83,13 +83,13 @@ module.exports = {
             coins[message.author.id] = {
             coins: coins[message.author.id].coins + robbery
           };
-          fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
             coins[targetId] = {
             coins: coins[targetId].coins - robbery
           };
-          fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
         message.channel.send("You stole " + robbery +  " coins from <@" + targetId + ">!")
@@ -99,14 +99,14 @@ module.exports = {
         coins[targetId] = {
             coins: coins[targetId].coins + robbery
           };
-          fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
 
         });
             coins[message.author.id] = {
             coins: coins[message.author.id].coins - robbery
           };
-          fs.writeFile("./coins.json", JSON.stringify(coins), (err) => {
+          fs.writeFile("../coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
         message.channel.send("The robbery was unsuccessful you gave <@" + targetId + "> " + robbery +  " coins!")

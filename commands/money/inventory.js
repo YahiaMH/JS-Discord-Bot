@@ -11,7 +11,7 @@ module.exports = {
         ball[targetId] = {
           ball: 0
         };
-        fs.writeFile("./8ball.json", JSON.stringify(ball), (err) => {
+        fs.writeFile("../8ball.json", JSON.stringify(ball), (err) => {
           if (err) console.log(err)
         });
       }
@@ -19,7 +19,7 @@ module.exports = {
         lockpick[targetId] = {
           lockpick: 0
         };
-        fs.writeFile("./lockpick.json", JSON.stringify(lockpick), (err) => {
+        fs.writeFile("../lockpick.json", JSON.stringify(lockpick), (err) => {
           if (err) console.log(err)
         });
       }
