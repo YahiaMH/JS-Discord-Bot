@@ -5,6 +5,12 @@ const fs = require('fs').promises;
 const prefix = '.';
 const path = require('path');
 const DisTube = require('distube');
+const mongoose = require('mongoose');
+
+mongoose.connect(process.env.MONGODB_URI, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+});
 
 client.commands = new Map();
 
