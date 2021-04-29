@@ -6,6 +6,14 @@ const talkedRecently = new Set();
 
 module.exports = {
   run:  async(client, message) => {
+    if(!coins[message.author.id]){
+        coins[message.author.id] = {
+          coins: 0
+        };
+        fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
+          if (err) console.log(err)
+        });
+      }
     if(coins[message.author.id].coins < 30){
         message.reply('You need to have more than 30 coins in your wallet to play')
       }else{

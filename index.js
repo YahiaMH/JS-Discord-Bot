@@ -6,12 +6,13 @@ const prefix = '.';
 const path = require('path');
 const DisTube = require('distube');
 const mongoose = require('mongoose');
+const User = require('./schemas/UserSchema')
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
+  useCreateIndex: true,
 });
-
 client.commands = new Map();
 
 client.distube = new DisTube(client, {
@@ -42,6 +43,10 @@ client.on('ready', () => {
 });
 
 client.on('message', async function(message) {
+  const newUser = await User.create({
+    username: message.author.username,
+    discordId: message.author.id,
+  });
 	if (message.author.bot) return;
 	if (!message.content.startsWith(prefix)) return;
 	let cmdArgs = message.content

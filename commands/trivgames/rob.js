@@ -15,6 +15,13 @@ module.exports = {
         fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
           if (err) console.log(err)
         });
+      }if(!coins[message.author.id]){
+        coins[message.author.id] = {
+          coins: 0
+        };
+        fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
+          if (err) console.log(err)
+        });
       }
   if (talkedRecently.has(message.author.id)) {
     message.reply("You can only do this every 2 minutes");

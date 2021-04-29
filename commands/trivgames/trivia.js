@@ -11,6 +11,22 @@ module.exports = {
     } else {
       const target = message.mentions.users.first() || message.author;
       const targetId = target.id;
+      if(!coins[message.author.id]){
+        coins[message.author.id] = {
+          coins: 0
+        };
+        fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
+          if (err) console.log(err)
+        });
+      }
+      if(!coins[targetId]){
+        coins[targetId] = {
+          coins: 0
+        };
+        fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
+          if (err) console.log(err)
+        });
+      }
       console.log(message.mentions.users.first())
      if (targetId == message.author.id){
      const response = await fetch('https://opentdb.com/api.php?amount=50&difficulty=easy&type=multiple');
