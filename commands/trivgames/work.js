@@ -1,6 +1,4 @@
 const Discord = require('discord.js');
-let coins = require("../../json/coins.json");
-let work = require("../../json/work.json")
 const fs = require('fs').promises;
 let User = require('../../schemas/UserSchema')
 

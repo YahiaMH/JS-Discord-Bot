@@ -138,7 +138,8 @@ module.exports = {
      var mesQuestion = messQuestion.replace(/&/g,'')
      var meQuestion = mesQuestion.replace(/quot/g,'')
      var question = meQuestion.replace(/#309/g,'')
-     switch(randAnswer) {
+     setTimeout(function(){
+            switch(randAnswer) {
       case 1:
             const triviaEmbed = new Discord.MessageEmbed()
             .setTitle(question)
@@ -168,11 +169,13 @@ module.exports = {
             message.channel.send(trivia3Embed)
         break;
         }
+        }, 1500);
+
       try{
         const filter = (message) => message.content === '1' || message.content === '2' || message.content === '3' || message.content === '4';
         const answer = await message.channel.awaitMessages(filter, { max: 1, time: 12000, errors: ['time', 'max']});
         const ans = answer.first();
-        if (randAnswer === ans.content)
+        if (randAnswer == ans.content)
         {
           if(ans.author.id === message.author.id){
           message.channel.send('<@'+ans.author.id+"> got that right!");
@@ -194,28 +197,42 @@ module.exports = {
             console.log('in ans.author.id === targetId')
           }
         }else if(randAnswer !== ans.content){
-          }
-          console.log(s+ '' +i)
+                    console.log(s+ '' +i)
           console.log(randAnswer)
           if(ans.author.id == message.author.id){
             message.channel.send('Wrong Answer!')
+            if(i>0){
             message.channel.send('You lose a point!')
             i--;
+            }else if(i==0){
+            }
             const ansEmbed = new Discord.MessageEmbed()
             .setTitle("POINTS")
             .setColor('#0000ff')
             .setDescription('<@' + message.author.id + '>: ' + i + ' points \n<@' + targetId + '>: ' + s + ' points')
-            message.channel.send(ansEmbed)
+            setTimeout(function(){
+              message.channel.send(ansEmbed)
+            }, 1000);
+
           }else if(ans.author.id === targetId){
             message.channel.send('Wrong Answer!')
+            if(s>0){
             message.channel.send('You lose a point!')
             s--;
+            }else{
+              
+            }
             const ansEmbed = new Discord.MessageEmbed()
             .setTitle("POINTS")
             .setColor('#0000ff')
             .setDescription('<@' + message.author.id + '>: ' + i + ' points \n<@' + targetId + '>: ' + s + ' points')
-            message.channel.send(ansEmbed)
+            setTimeout(function(){
+              message.channel.send(ansEmbed)
+            }, 1000);
+            
           }
+          }
+
         }catch(e){
         message.channel.send('Neither of you responded in time!')
       }
