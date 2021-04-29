@@ -1,35 +1,16 @@
 const Discord = require('discord.js');
-let coins = require("../../json/coins.json");
-let bank = require("../../json/bank.json");
+const User = require('../../schemas/UserSchema')
 const fs = require('fs').promises;
 
 module.exports = {
    run: async(client, message) => {
     var target = message.mentions.users.first() || message.author;
-      var targetId = target.id;
-      if(!coins[targetId]){
-        coins[targetId] = {
-          coins: 0
-        };
-        fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
-          if (err) console.log(err)
-        });
-      }
-      if(!bank[targetId]){
-        bank[targetId] = {
-          bank: 0
-        };
-        fs.writeFile("./json/bank.json", JSON.stringify(bank), (err) => {
-          if (err) console.log(err)
-        });
-      }
-      const userName = client.users.cache.get(targetId); 
-      const tag1 = userName.tag
-      const name = tag1.split("#");
+    targetId = target.id;
+    const bal = await User.find({ discordId: targetId});
       const balEmbed = new Discord.MessageEmbed()
-            .setTitle(name[0] + "'s balance" )
+            .setTitle(bal[0].username + "'s balance" )
             .setColor('#0000ff')
-            .setDescription("Wallet: " + coins[targetId].coins + '\nBank: ' + bank[targetId].bank)
+            .setDescription("Wallet: " + bal[0].coins + '\nBank: ' + bal[0].bank)
             message.channel.send(balEmbed)
 
 },

@@ -12,7 +12,9 @@ mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
+  useFindAndModify: false
 });
+
 client.commands = new Map();
 
 client.distube = new DisTube(client, {
@@ -40,14 +42,13 @@ client.distube = new DisTube(client, {
 
 client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
+  const Guilds = client.guilds.cache.map(guild => guild.id);
 });
 
 client.on('message', async function(message) {
-  const newUser = await User.create({
-    username: message.author.username,
-    discordId: message.author.id,
-  });
 	if (message.author.bot) return;
+  const target = message.mentions.users.first() || message.author;
+  targetId = target.id;
 	if (!message.content.startsWith(prefix)) return;
 	let cmdArgs = message.content
 		.substring(message.content.indexOf(prefix) + 1)
@@ -58,6 +59,16 @@ client.on('message', async function(message) {
 	} else {
 		console.log('Command does not exist');
 	}
+});
+client.on('guildMemberAdd', async (member) =>{
+  const newMember = await User.create({
+    username: member.user.username,
+    discordId: member.id,
+    coins: 0,
+    bank: 0,
+    balls: 0,
+    lockpick: 0,
+  });
 });
 
 keepAlive();

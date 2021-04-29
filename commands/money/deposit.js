@@ -1,71 +1,48 @@
 const Discord = require('discord.js');
-let coins = require("../../json/coins.json");
-var bank = require("../../json/bank.json");
+let User = require('../../schemas/UserSchema')
 const fs = require('fs').promises;
 
 module.exports = {
    run: async(client, message, arg) => {
      const args = Number(arg)
-     if(!bank[message.author.id]){
-        bank[message.author.id] = {
-          bank: 0
-        };
-        fs.writeFile("./json/bank.json", JSON.stringify(bank), (err) => {
-          if (err) console.log(err)
-        });
-      }
-      if(!coins[message.author.id]){
-        coins[message.author.id] = {
-          coins: 0
-        };
-        fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
-          if (err) console.log(err)
-        });
-      }
-
-    if (args > (coins[message.author.id].coins)){
-      message.channel.send('You only have ' + coins[message.author.id].coins + ' coins')
+     const targetId = message.author.id;
+     const bal = await User.find({discordId: targetId})
+     console.log(arg)
+    if (args > bal[0].coins){
+      message.channel.send('You only have ' + bal[0].coins + ' coins in your wallet')
     }
-    else if (args < (coins[message.author.id].coins) && args > 0){
-        coins[message.author.id] = {
-        coins: coins[message.author.id].coins - args
-          };
-          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
-          if (err) console.log(err)
+    else if (args <= bal[0].coins && args > 0){
+      await User.findOneAndUpdate({
+          discordId: message.author.id,
+        }, {
+          $inc: {
+            coins: -args,
+            bank: args
+          }
         });
-
-        bank[message.author.id] = {
-        bank: bank[message.author.id].bank + args
-          };
-          fs.writeFile("./json/bank.json", JSON.stringify(bank), (err) => {
-          if (err) console.log(err)
-        });
-        message.channel.send(args + ' coins deposited to your bank')
+        message.channel.send(args + ' Coins deposited')
     }
-    else if(arg[0] === 'all' || arg[0] === 'a'){
-      if (coins[message.author.id].coins === 0){
-        message.channel.send('What are you trying to deposit? The 0 coins in your wallet?');
+    
+    else if (arg[0] === 'all' || arg[0] === 'a'){
+      if (bal[0].coins === 0){
+        message.channel.send("What are you trying to withdraw? The 0 coins in your wallet?")
       }else{
-        bank[message.author.id] = {
-        bank: bank[message.author.id].bank + (coins[message.author.id].coins)
-          };
-          fs.writeFile("./json/bank.json", JSON.stringify(bank), (err) => {
-          if (err) console.log(err)
+        message.channel.send(bal[0].coins + ' Coins deposited')
+        await User.findOneAndUpdate({
+          discordId: message.author.id,
+        }, {
+          $inc: {
+            bank: bal[0].coins,
+            coins: -bal[0].coins
+          }
         });
-        message.channel.send((coins[message.author.id].coins) + ' coins deposited to your bank')
-        coins[message.author.id] = {
-        coins: coins[message.author.id].coins - coins[message.author.id].coins
-          };
-          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
-          if (err) console.log(err)
-        }); 
+        
       }
-      
     }
     else{
-      message.channel.send('How much are you trying to deposit?')
+      message.channel.send('How much are you trying to deposit?');
     }
 },
-  aliases: ['dep','d','deposit']
+  aliases: ['dep', 'd', 'deposit']
  
 }

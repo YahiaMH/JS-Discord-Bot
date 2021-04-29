@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-let coins = require("../../json/coins.json");
+let User = require("../../schemas/UserSchema");
 const fs = require('fs').promises;
 const talkedRecently = new Set();
 
@@ -8,24 +8,17 @@ module.exports = {
     if (talkedRecently.has(message.author.id)) {
     message.channel.send("You can only do this every 5 minutes");
     } else {
-      if(!coins[message.author.id]){
-        coins[message.author.id] = {
-          coins: 0
-        };
-        fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
-          if (err) console.log(err)
-        });
-      }
       const randBeg = Math.floor(Math.random()*2)+1
       console.log(randBeg)
       if (randBeg == 1){
         const coinAmnt = Math.floor(Math.random() * 51)+25
-          coins[message.author.id] = {
-            coins: coins[message.author.id].coins + coinAmnt
-          };
-          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
-          if (err) console.log(err)
-          });
+        await User.findOneAndUpdate({
+          discordId: message.author.id,
+        }, {
+          $inc: {
+            coins: coinAmnt
+          }
+        });
         message.channel.send("Alright I'll let you have some")
         message.channel.send(coinAmnt + " coins have been added to your wallet")
       }

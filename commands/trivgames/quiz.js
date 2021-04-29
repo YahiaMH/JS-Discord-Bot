@@ -1,20 +1,14 @@
 const Discord = require('discord.js');
-let coins = require("../../json/coins.json");
+let User = require('../../schemas/UserSchema')
 const fs = require('fs').promises;
 const fetch = require("node-fetch");
 const talkedRecently = new Set();
 
 module.exports = {
   run:  async(client, message) => {
-    if(!coins[message.author.id]){
-        coins[message.author.id] = {
-          coins: 0
-        };
-        fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
-          if (err) console.log(err)
-        });
-      }
-    if(coins[message.author.id].coins < 30){
+    const targetId = message.author.id;
+    const bal = await User.find({ discordId: targetId});
+    if(bal[0].coins < 30){
         message.reply('You need to have more than 30 coins in your wallet to play')
       }else{
          if (talkedRecently.has(message.author.id)) {
@@ -40,18 +34,14 @@ module.exports = {
      
      if (ans.content.toLowerCase() === correctAnswer.toLowerCase())
      {
-       if(!coins[message.author.id]){
-        coins[message.author.id] = {
-          coins: 0
-        };
-          }
           const coinAmnt = Math.floor(Math.random() * 21)+10;
-          coins[message.author.id] = {
-            coins: coins[message.author.id].coins + coinAmnt
-          };
-          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
-          if (err) console.log(err)
-        });
+          await User.findOneAndUpdate({
+          discordId: targetId,
+          }, {
+          $inc: {
+            coins: coinAmnt,
+          }
+          });
        var randomNum = Math.floor(Math.random() * 4)+1;
        console.log(randomNum);
        if (randomNum === 1)
@@ -73,18 +63,14 @@ module.exports = {
        }
      }
      else {
-       if(!coins[message.author.id]){
-        coins[message.author.id] = {
-          coins: 0
-        };
-          }
           var coinAmnt = Math.floor(Math.random() * 21)+10;
-          coins[message.author.id] = {
-            coins: coins[message.author.id].coins - coinAmnt
-          };
-          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
-          if (err) console.log(err)
-        });
+          await User.findOneAndUpdate({
+          discordId: targetId,
+          }, {
+          $inc: {
+            coins: -coinAmnt,
+          }
+          });
         
        var randomNum = Math.floor(Math.random() * 4)+1;
        console.log(randomNum);
@@ -115,12 +101,13 @@ module.exports = {
        }
      }
      }catch(e){
-          coins[message.author.id] = {
-            coins: coins[message.author.id].coins - 30
-          };
-          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
-          if (err) console.log(err)
-        });
+          await User.findOneAndUpdate({
+          discordId: targetId,
+          }, {
+          $inc: {
+            coins: -30,
+          }
+          });
        message.reply("You lost 30 coins for not answering in time")
      }
      talkedRecently.add(message.author.id);

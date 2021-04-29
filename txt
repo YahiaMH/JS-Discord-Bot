@@ -1,0 +1,25 @@
+    var guild = await client.guilds.cache.get("739242587076034620");
+   var members = guild.members.cache.map(member => member.id);
+   for(let i = 0;i<members.length;i++){
+     const userName = client.users.cache.get(members[i]); 
+     const tag1 = userName.tag
+     var name = tag1.split("#");
+     var botOrNot;
+     client.users.fetch(members[i]).then(user => {
+       botOrNot = user.bot;
+       if(botOrNot) return;
+     });
+     try{
+     await User.create({
+     username: name[0],
+     discordId: members[i],
+     coins: 0,
+     bank: 0,
+     shopItems: {
+       balls: 0,
+      lockpick: 0,
+     }
+   });
+   }catch(e){
+   }
+ }

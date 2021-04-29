@@ -1,38 +1,19 @@
 const Discord = require('discord.js');
-let ball = require("../../json/8ball.json");
-let lockpick = require("../../json/lockpick.json");
+const User = require('../../schemas/UserSchema')
 const fs = require('fs').promises;
 
 module.exports = {
    run: async(client, message) => {
     var target = message.mentions.users.first() || message.author;
-      var targetId = target.id;
-      if(!ball[targetId]){
-        ball[targetId] = {
-          ball: 0
-        };
-        fs.writeFile("./json/8ball.json", JSON.stringify(ball), (err) => {
-          if (err) console.log(err)
-        });
-      }
-      if(!lockpick[targetId]){
-        lockpick[targetId] = {
-          lockpick: 0
-        };
-        fs.writeFile("./json/lockpick.json", JSON.stringify(lockpick), (err) => {
-          if (err) console.log(err)
-        });
-      }
-      const userName = client.users.cache.get(targetId); 
-      const tag1 = userName.tag
-      const name = tag1.split("#");
+    targetId = target.id;
+    const bal = await User.find({ discordId: targetId});
       const balEmbed = new Discord.MessageEmbed()
-            .setTitle(name[0] + "'s inventory" )
+            .setTitle(bal[0].username + "'s balance" )
             .setColor('#0000ff')
-            .setDescription("8balls: " + ball[targetId].ball + '\nLockpicks: ' + lockpick[targetId].lockpick)
+            .setDescription("Lockpicks: " + bal[0].shopItems.lockpick + '\n8balls: ' + bal[0].shopItems.balls)
             message.channel.send(balEmbed)
 
 },
-  aliases: ['inv','inventory','i']
+  aliases: ['inv', 'inventory', 'i']
  
 }

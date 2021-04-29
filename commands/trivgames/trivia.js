@@ -1,5 +1,5 @@
 const Discord = require('discord.js');
-let coins = require("../../json/coins.json");
+let User = require('../../schemas/UserSchema')
 const fetch = require("node-fetch");
 const fs = require("fs").promises;
 const talkedRecently = new Set();
@@ -11,23 +11,6 @@ module.exports = {
     } else {
       const target = message.mentions.users.first() || message.author;
       const targetId = target.id;
-      if(!coins[message.author.id]){
-        coins[message.author.id] = {
-          coins: 0
-        };
-        fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
-          if (err) console.log(err)
-        });
-      }
-      if(!coins[targetId]){
-        coins[targetId] = {
-          coins: 0
-        };
-        fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
-          if (err) console.log(err)
-        });
-      }
-      console.log(message.mentions.users.first())
      if (targetId == message.author.id){
      const response = await fetch('https://opentdb.com/api.php?amount=50&difficulty=easy&type=multiple');
      const data = await response.json();
@@ -82,18 +65,14 @@ module.exports = {
      console.log("this is the correct answer " + (randAnswer+1))
      if (randAnswer+1 == ans.content)
      {
-       if(!coins[message.author.id]){
-        coins[message.author.id] = {
-          coins: 0
-        };
-          }
        const coinAmnt = Math.floor(Math.random() * 101)+100;
-          coins[message.author.id] = {
-            coins: coins[message.author.id].coins + coinAmnt
-          };
-          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
-          if (err) console.log(err)
-        });
+          await User.findOneAndUpdate({
+          discordId: message.author.id,
+          }, {
+          $inc: {
+            coins: coinAmnt,
+          }
+          });
 
        var randomNum = Math.floor(Math.random() * 4)+1;
        if (randomNum == 1)
@@ -257,21 +236,23 @@ module.exports = {
           message.channel.send(winnerEmbed)
       if(i>s){
       const coinAmnt = Math.floor(Math.random() * 101)+200;
-      coins[message.author.id] = {
-            coins: coins[message.author.id].coins + coinAmnt
-          };
-          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
-          if (err) console.log(err)
-        });
+          await User.findOneAndUpdate({
+          discordId: message.author.id,
+          }, {
+          $inc: {
+            coins: coinAmnt,
+          }
+          });
       message.channel.send("Congrats on winning <@" + message.author.id + "> you get " + coinAmnt + " Coins!")
       }else{
         const coinAmnt = Math.floor(Math.random() * 101)+200;
-      coins[targetId] = {
-            coins: coins[targetId].coins + coinAmnt
-          };
-          fs.writeFile("./json/coins.json", JSON.stringify(coins), (err) => {
-          if (err) console.log(err)
-        });
+          await User.findOneAndUpdate({
+          discordId: message.author.id,
+          }, {
+          $inc: {
+            coins: coinAmnt,
+          }
+          });
       message.channel.send("Congrats on winning <@" + targetId + "> you get " + coinAmnt + " Coins!")
       }
       
