@@ -10,11 +10,11 @@ module.exports = {
     message.reply("You can only do this every 15 seconds");
     } else {
       const target = message.mentions.users.first() || message.author;
+      const commandAuth = message.author;
       const targetId = target.id;
      if (targetId == message.author.id){
      const response = await fetch('https://opentdb.com/api.php?amount=50&difficulty=easy&type=multiple');
      const data = await response.json();
-     console.log(data);
      var length = data.results.length;
      var randomNumber = Math.floor(Math.random() * length);
      var randomQuestion = data.results[randomNumber];
@@ -114,7 +114,7 @@ module.exports = {
      }
      }else if (targetId != message.author.id){
        message.channel.send('<@' + targetId + '> Would you like to play? y or n');
-      const filter = (message) => message.content === 'y' || message.content === 'yes' || message.content === 'n' || message.content === 'no';
+      const filter = (message) => message.author == target;
       try{
       const answer = await message.channel.awaitMessages(filter, { max: 1, time: 12000, errors: ['time', 'max']});
       const ans = answer.first();
@@ -123,9 +123,10 @@ module.exports = {
       var i = 0;
       var s = 0;
       while(i<=2 || s<=2){
+      console.log(i);
+      console.log(s);
       const response = await fetch('https://opentdb.com/api.php?amount=50&difficulty=easy&type=multiple');
      const data = await response.json();
-     console.log(data);
      var length = data.results.length;
      var randomNumber = Math.floor(Math.random() * length);
      var randomQuestion = data.results[randomNumber];
@@ -138,41 +139,49 @@ module.exports = {
      var mesQuestion = messQuestion.replace(/&/g,'')
      var meQuestion = mesQuestion.replace(/quot/g,'')
      var question = meQuestion.replace(/#309/g,'')
-     setTimeout(function(){
+     
             switch(randAnswer) {
       case 1:
             const triviaEmbed = new Discord.MessageEmbed()
             .setTitle(question)
             .setColor('#0000ff')
             .setDescription("1. " + randomQuestion.correct_answer + "\n2. " + randomQuestion.incorrect_answers[0] + "\n3. " + randomQuestion.incorrect_answers[1] + "\n4. " + randomQuestion.incorrect_answers[2])
+            setTimeout(function(){
             message.channel.send(triviaEmbed)
+            }, 1500);
         break;
       case 2:
             const trivia1Embed = new Discord.MessageEmbed()
             .setTitle(question)
             .setColor('#0000ff')
             .setDescription("1. " + randomQuestion.incorrect_answers[0] + "\n2. " + randomQuestion.correct_answer + "\n3. " + randomQuestion.incorrect_answers[1] + "\n4. " + randomQuestion.incorrect_answers[2])
-            message.channel.send(trivia1Embed)    
+            setTimeout(function(){
+            message.channel.send(trivia1Embed)
+            }, 1500);    
         break;
       case 3:
             const trivia2Embed = new Discord.MessageEmbed()
             .setTitle(question)
             .setColor('#0000ff')
             .setDescription("1. " + randomQuestion.incorrect_answers[0] + "\n2. " + randomQuestion.incorrect_answers[1] + "\n3. " + randomQuestion.correct_answer + "\n4. " + randomQuestion.incorrect_answers[2])
+            setTimeout(function(){
             message.channel.send(trivia2Embed)
+            }, 1500);
         break;
       case 4:
             const trivia3Embed = new Discord.MessageEmbed()
             .setTitle(question)
             .setColor('#0000ff')
             .setDescription("1. " + randomQuestion.incorrect_answers[0] + "\n2. " + randomQuestion.incorrect_answers[1] + "\n3. " + randomQuestion.incorrect_answers[2] + "\n4. " + randomQuestion.correct_answer)
+            setTimeout(function(){
             message.channel.send(trivia3Embed)
+            }, 1500);
         break;
         }
-        }, 1500);
+        
 
       try{
-        const filter = (message) => message.content === '1' || message.content === '2' || message.content === '3' || message.content === '4';
+        const filter = (message) => (message.author == commandAuth || message.author == target) && message.content === '1' || message.content === '2' || message.content === '3' || message.content === '4';
         const answer = await message.channel.awaitMessages(filter, { max: 1, time: 12000, errors: ['time', 'max']});
         const ans = answer.first();
         if (randAnswer == ans.content)
@@ -184,8 +193,9 @@ module.exports = {
             .setTitle("POINTS")
             .setColor('#0000ff')
             .setDescription('<@' + message.author.id + '>: ' + i + ' points \n<@' + targetId + '>: ' + s + ' points')
-            message.channel.send(ansEmbed)
-            console.log('in ans.author.id === message.author.id')
+            setTimeout(function(){
+              message.channel.send(ansEmbed)
+            }, 1000);
           }else if(ans.author.id === targetId){
             message.channel.send('<@'+ans.author.id+"> got that right!");
           s++;
@@ -193,11 +203,12 @@ module.exports = {
             .setTitle("POINTS")
             .setColor('#0000ff')
             .setDescription('<@' + message.author.id + '>: ' + i + ' points \n<@' + targetId + '>: ' + s + ' points')
-            message.channel.send(ansEmbed)
-            console.log('in ans.author.id === targetId')
+            setTimeout(function(){
+              message.channel.send(ansEmbed)
+            }, 1000);
           }
         }else if(randAnswer !== ans.content){
-                    console.log(s+ '' +i)
+           console.log(s+ '' +i)
           console.log(randAnswer)
           if(ans.author.id == message.author.id){
             message.channel.send('Wrong Answer!')

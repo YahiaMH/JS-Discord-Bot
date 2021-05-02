@@ -43,12 +43,22 @@ client.distube = new DisTube(client, {
 client.on('ready', () => {
 	console.log(`Logged in as ${client.user.tag}!`);
   const Guilds = client.guilds.cache.map(guild => guild.id);
+  
 });
 
 client.on('message', async function(message) {
 	if (message.author.bot) return;
   const target = message.mentions.users.first() || message.author;
   targetId = target.id;
+  await User.update({}, {$set : {"work": 0}}, {multi:true});
+  await User.findOneAndUpdate({
+    discordId: targetId,
+    }, {
+    $inc: {
+    work: 5,
+    }
+    });
+
 	if (!message.content.startsWith(prefix)) return;
 	let cmdArgs = message.content
 		.substring(message.content.indexOf(prefix) + 1)
