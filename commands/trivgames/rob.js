@@ -14,11 +14,9 @@ module.exports = {
     }else{
       if (bal[0].coins < 50){
         message.reply("You need to have more than 50 coins");
-        return;
       }
       else if(targetBal[0].coins < 50){
         message.channel.send("<@" + targetId +"> needs to have over 50 coins in their wallet");
-        return;
       }
       // else{
         // if (lockpick[message.author.id].lockpick > 0){
@@ -72,7 +70,8 @@ module.exports = {
         else{
         const robChance = Math.floor(Math.random()*2)+1;
         if (robChance == 1){
-        const robbery = Math.floor(Math.random()*((coins[targetId].coins - 40)-50)+50);
+        const robbery = Math.floor(Math.random()*((targetBal[0].coins - 40)-50)+50);
+        console.log('hi')
           await User.findOneAndUpdate({
           discordId: message.author.id,
           }, {
@@ -90,7 +89,7 @@ module.exports = {
         message.channel.send("You stole " + robbery +  " coins from <@" + targetId + ">!")
         }
         else{
-        const robbery = Math.floor(Math.random()*((coins[message.author.id].coins - 40)-50)+50);
+        const robbery = Math.floor(Math.random()*((bal[0].coins - 40)-50)+50);
           await User.findOneAndUpdate({
           discordId: message.author.id,
           }, {

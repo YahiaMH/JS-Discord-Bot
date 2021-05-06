@@ -120,9 +120,14 @@ module.exports = {
       const ans = answer.first();
       console.log('here')
       if(ans.content.toLowerCase() == 'y' || ans.content.toLowerCase() == 'yes'){
-      var i = 0;
-      var s = 0;
-      while(i<=2 || s<=2){
+        var i = 0;
+        var s = 0;
+      while(3>i){
+        if (s >= 3){
+        break;
+        }else if(i>=3){
+            break;
+          }
       console.log(i);
       console.log(s);
       const response = await fetch('https://opentdb.com/api.php?amount=50&difficulty=easy&type=multiple');
@@ -133,7 +138,8 @@ module.exports = {
      var messyQuestion = randomQuestion.question;
      var correctAnswer = randomQuestion.correct_answer;
      console.log(randomQuestion.incorrect_answers);
-     console.log(messyQuestion)
+     console.log(messyQuestion);
+     console.log(correctAnswer);
      var randAnswer = Math.floor(Math.random() * 4)+1;
      var messQuestion = messyQuestion.replace(/;/g,' ')
      var mesQuestion = messQuestion.replace(/&/g,'')
@@ -189,50 +195,30 @@ module.exports = {
           if(ans.author.id === message.author.id){
           message.channel.send('<@'+ans.author.id+"> got that right!");
           i++;
-          const ansEmbed = new Discord.MessageEmbed()
-            .setTitle("POINTS")
-            .setColor('#0000ff')
-            .setDescription('<@' + message.author.id + '>: ' + i + ' points \n<@' + targetId + '>: ' + s + ' points')
-            setTimeout(function(){
-              message.channel.send(ansEmbed)
-            }, 1000);
           }else if(ans.author.id === targetId){
             message.channel.send('<@'+ans.author.id+"> got that right!");
           s++;
-          const ansEmbed = new Discord.MessageEmbed()
-            .setTitle("POINTS")
-            .setColor('#0000ff')
-            .setDescription('<@' + message.author.id + '>: ' + i + ' points \n<@' + targetId + '>: ' + s + ' points')
-            setTimeout(function(){
-              message.channel.send(ansEmbed)
-            }, 1000);
           }
         }else if(randAnswer !== ans.content){
-           console.log(s+ '' +i)
-          console.log(randAnswer)
           if(ans.author.id == message.author.id){
-            message.channel.send('Wrong Answer!')
+            message.channel.send('Wrong Answer! ' + correctAnswer + ' was the right answer')
             if(i>0){
             message.channel.send('You lose a point!')
             i--;
             }else if(i==0){
             }
-            const ansEmbed = new Discord.MessageEmbed()
-            .setTitle("POINTS")
-            .setColor('#0000ff')
-            .setDescription('<@' + message.author.id + '>: ' + i + ' points \n<@' + targetId + '>: ' + s + ' points')
-            setTimeout(function(){
-              message.channel.send(ansEmbed)
-            }, 1000);
 
           }else if(ans.author.id === targetId){
-            message.channel.send('Wrong Answer!')
+            message.channel.send('Wrong Answer! ' + correctAnswer + ' was the right answer')
             if(s>0){
             message.channel.send('You lose a point!')
             s--;
             }else{
               
             }
+            
+          }
+          }
             const ansEmbed = new Discord.MessageEmbed()
             .setTitle("POINTS")
             .setColor('#0000ff')
@@ -240,13 +226,10 @@ module.exports = {
             setTimeout(function(){
               message.channel.send(ansEmbed)
             }, 1000);
-            
-          }
-          }
-
         }catch(e){
         message.channel.send('Neither of you responded in time!')
       }
+      
       }
 
       }else{
@@ -275,7 +258,7 @@ module.exports = {
       }else{
         const coinAmnt = Math.floor(Math.random() * 101)+200;
           await User.findOneAndUpdate({
-          discordId: message.author.id,
+          discordId: targetId,
           }, {
           $inc: {
             coins: coinAmnt,

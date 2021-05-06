@@ -4,9 +4,13 @@ const keepAlive = require('./server');
 const fs = require('fs').promises;
 const prefix = '.';
 const path = require('path');
-const DisTube = require('distube');
+// const DisTube = require('distube');
 const mongoose = require('mongoose');
 const User = require('./schemas/UserSchema')
+
+client.on('ready', () => {
+	console.log(`Logged in as ${client.user.tag}!`);
+});
 
 mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
@@ -17,10 +21,10 @@ mongoose.connect(process.env.MONGODB_URI, {
 
 client.commands = new Map();
 
-client.distube = new DisTube(client, {
-	searchSongs: false,
-	emitNewSongOnly: true
-});
+// client.distube = new DisTube(client, {
+// 	searchSongs: false,
+// 	emitNewSongOnly: true
+// });
 
 (async function registerCommands(dir = 'commands') {
 	let files = await fs.readdir(path.join(__dirname, dir));
@@ -40,24 +44,10 @@ client.distube = new DisTube(client, {
 	}
 })();
 
-client.on('ready', () => {
-	console.log(`Logged in as ${client.user.tag}!`);
-  const Guilds = client.guilds.cache.map(guild => guild.id);
-  
-});
-
 client.on('message', async function(message) {
 	if (message.author.bot) return;
   const target = message.mentions.users.first() || message.author;
   targetId = target.id;
-  await User.update({}, {$set : {"work": 0}}, {multi:true});
-  await User.findOneAndUpdate({
-    discordId: targetId,
-    }, {
-    $inc: {
-    work: 5,
-    }
-    });
 
 	if (!message.content.startsWith(prefix)) return;
 	let cmdArgs = message.content
@@ -70,6 +60,7 @@ client.on('message', async function(message) {
 		console.log('Command does not exist');
 	}
 });
+
 client.on('guildMemberAdd', async (member) =>{
   const newMember = await User.create({
     username: member.user.username,
