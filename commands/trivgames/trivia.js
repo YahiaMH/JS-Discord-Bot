@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 let User = require('../../schemas/UserSchema')
+let balmngnt = require('../../balManagement');
 const fetch = require("node-fetch");
 const fs = require("fs").promises;
 const talkedRecently = new Set();
@@ -66,14 +67,7 @@ module.exports = {
      if (randAnswer+1 == ans.content)
      {
        const coinAmnt = Math.floor(Math.random() * 101)+100;
-          await User.findOneAndUpdate({
-          discordId: message.author.id,
-          }, {
-          $inc: {
-            coins: coinAmnt,
-          }
-          });
-
+          balmngnt.add(message.author.id,coinAmnt);
        var randomNum = Math.floor(Math.random() * 4)+1;
        if (randomNum == 1)
        {
@@ -247,23 +241,11 @@ module.exports = {
           message.channel.send(winnerEmbed)
       if(i>s){
       const coinAmnt = Math.floor(Math.random() * 101)+200;
-          await User.findOneAndUpdate({
-          discordId: message.author.id,
-          }, {
-          $inc: {
-            coins: coinAmnt,
-          }
-          });
+      balmngnt.add(message.author.id,coinAmnt);   
       message.channel.send("Congrats on winning <@" + message.author.id + "> you get " + coinAmnt + " Coins!")
       }else{
         const coinAmnt = Math.floor(Math.random() * 101)+200;
-          await User.findOneAndUpdate({
-          discordId: targetId,
-          }, {
-          $inc: {
-            coins: coinAmnt,
-          }
-          });
+      balmngnt.add(targetId,coinAmnt);
       message.channel.send("Congrats on winning <@" + targetId + "> you get " + coinAmnt + " Coins!")
       }
       

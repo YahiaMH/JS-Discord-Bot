@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 let User = require('../../schemas/UserSchema')
+let balmgnt = require('../../balManagement')
 const fs = require('fs').promises;
 const fetch = require("node-fetch");
 const talkedRecently = new Set();
@@ -35,13 +36,7 @@ module.exports = {
      if (ans.content.toLowerCase() === correctAnswer.toLowerCase())
      {
           const coinAmnt = Math.floor(Math.random() * 21)+10;
-          await User.findOneAndUpdate({
-          discordId: targetId,
-          }, {
-          $inc: {
-            coins: coinAmnt,
-          }
-          });
+        balmngnt.add(targetId, coinAmnt);
        var randomNum = Math.floor(Math.random() * 4)+1;
        console.log(randomNum);
        if (randomNum === 1)
@@ -64,13 +59,7 @@ module.exports = {
      }
      else {
           var coinAmnt = Math.floor(Math.random() * 21)+10;
-          await User.findOneAndUpdate({
-          discordId: targetId,
-          }, {
-          $inc: {
-            coins: -coinAmnt,
-          }
-          });
+        balmngnt.subtract(targetId,coinAmnt); 
         
        var randomNum = Math.floor(Math.random() * 4)+1;
        console.log(randomNum);
@@ -101,13 +90,7 @@ module.exports = {
        }
      }
      }catch(e){
-          await User.findOneAndUpdate({
-          discordId: targetId,
-          }, {
-          $inc: {
-            coins: -30,
-          }
-          });
+        balmngnt.subtract(targetId,30); 
        message.reply("You lost 30 coins for not answering in time")
      }
      talkedRecently.add(message.author.id);

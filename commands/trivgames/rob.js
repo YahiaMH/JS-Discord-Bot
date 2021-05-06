@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
-let User = require('../../schemas/UserSchema')
+let User = require('../../schemas/UserSchema');
+let balmngnt = require('../../balManagement');
 const fs = require('fs').promises;
 const talkedRecently = new Set();
 
@@ -72,38 +73,14 @@ module.exports = {
         if (robChance == 1){
         const robbery = Math.floor(Math.random()*((targetBal[0].coins - 40)-50)+50);
         console.log('hi')
-          await User.findOneAndUpdate({
-          discordId: message.author.id,
-          }, {
-          $inc: {
-            coins: robbery,
-          }
-          });
-          await User.findOneAndUpdate({
-          discordId: targetId,
-          }, {
-          $inc: {
-            coins: -robbery,
-          }
-          });
+        balmngnt.add(message.author.id,robbery);
+        balmngnt.subtract(targetId,robbery); 
         message.channel.send("You stole " + robbery +  " coins from <@" + targetId + ">!")
         }
         else{
         const robbery = Math.floor(Math.random()*((bal[0].coins - 40)-50)+50);
-          await User.findOneAndUpdate({
-          discordId: message.author.id,
-          }, {
-          $inc: {
-            coins: -robbery,
-          }
-          });
-          await User.findOneAndUpdate({
-          discordId: targetId,
-          }, {
-          $inc: {
-            coins: robbery,
-          }
-          });
+        balmngnt.subtract(message.author.id,robbery);
+        balmngnt.add(targetId,robbery); 
         message.channel.send("The robbery was unsuccessful you gave <@" + targetId + "> " + robbery +  " coins!")
         }
         }

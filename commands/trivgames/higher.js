@@ -1,5 +1,6 @@
 const Discord = require('discord.js');
 let User = require('../../schemas/UserSchema')
+let balmgnt = require('../../balManagement')
 const fs = require('fs').promises;
 const talkedRecently = new Set();
 
@@ -43,13 +44,7 @@ module.exports = {
           message.channel.send("You got it in your first try SHEEEESH!")
           const coinAmnt = Math.floor(Math.random() * 1001)+ 1000
           message.channel.send("You got " + (coinAmnt) + " coins!")
-          await User.findOneAndUpdate({
-          discordId: targetId,
-        }, {
-          $inc: {
-            coins: coinAmnt,
-          }
-        });
+          balmngnt.add(targetId, coinAmnt);
           break;
         }
         else{
@@ -57,35 +52,17 @@ module.exports = {
           if ((i+1) <= 3){
           const coinAmnt = Math.floor(Math.random() * 101)+ 100
           message.channel.send("You got " + (coinAmnt) + " coins!")
-          await User.findOneAndUpdate({
-          discordId: targetId,
-          }, {
-          $inc: {
-            coins: coinAmnt,
-          }
-          });
+          balmngnt.add(targetId, coinAmnt);
           }
           else if((i+1) <= 6){
           const coinAmnt = Math.floor(Math.random() * 76)+ 25
           message.channel.send("You got " + (coinAmnt) + " coins!")
-          await User.findOneAndUpdate({
-          discordId: targetId,
-          }, {
-          $inc: {
-            coins: coinAmnt,
-          }
-          });
+          balmngnt.add(targetId, coinAmnt);
           }
           else if ((i+i) >= 12){
             const coinAmnt = Math.floor(Math.random() * 51)+25
           message.channel.send("You lost " + (coinAmnt) + " coins for being a dumbass")
-          await User.findOneAndUpdate({
-          discordId: targetId,
-          }, {
-          $inc: {
-            coins: -coinAmnt,
-          }
-          });
+          balmngnt.subtract(targetId, coinAmnt);
           }
           else{
             message.channel.send("You didn't lose or gain any coins.");
