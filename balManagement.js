@@ -2,23 +2,23 @@ const User = require('./schemas/UserSchema')
 
 async function add(id, num) {
   await User.findOneAndUpdate({
-  discordId: id,
+    discordId: id,
   }, {
-  $inc: {
-    coins: num,
-  }
-  });
+      $inc: {
+        coins: num,
+      }
+    });
 }
 
 
 async function subtract(id, num) {
   await User.findOneAndUpdate({
-  discordId: id,
+    discordId: id,
   }, {
-  $inc: {
-    coins: -num,
-  }
-  });
+      $inc: {
+        coins: -num,
+      }
+    });
 }
 
 

@@ -7,11 +7,11 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  coins: {type: Number, default: 0},
-  bank: {type: Number, default: 0},
+  coins: { type: Number, default: 0 },
+  bank: { type: Number, default: 0 },
   shopItems: {
-    balls: {type: Number, default: 0},
-    lockpick: {type: Number, default: 0}
+    balls: { type: Number, default: 0 },
+    lockpick: { type: Number, default: 0 }
   }
 });
 
