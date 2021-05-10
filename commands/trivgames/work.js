@@ -29,5 +29,5 @@ module.exports = {
     }
 
   },
-  aliases: ['work', 'w']
+  aliases: ['work']
 }

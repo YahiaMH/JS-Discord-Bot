@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 let User = require('../../schemas/UserSchema');
-let balmgnt = require('../../balManagement');
+let balmgnt = require('../../functions/balManagement');
 const fs = require('fs').promises;
 
 module.exports = {

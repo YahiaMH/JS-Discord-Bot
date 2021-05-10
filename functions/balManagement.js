@@ -18,7 +18,7 @@ async function subtract(id, num) {
       $inc: {
         coins: -num,
       }
-    });
+    });	
 }
 
 

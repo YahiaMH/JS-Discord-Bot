@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 let User = require("../../schemas/UserSchema");
-let balmgnt = require('../../balManagement')
+let balmgnt = require('../../functions/balManagement')
 const fs = require('fs').promises;
 const talkedRecently = new Set();
 
@@ -13,7 +13,7 @@ module.exports = {
       console.log(randBeg)
       if (randBeg == 1) {
         const coinAmnt = Math.floor(Math.random() * 51) + 25
-        balmgmt.add(message.author.id,coinAmnt);
+        balmgnt.add(message.author.id,coinAmnt);
         message.channel.send("Alright I'll let you have some")
         message.channel.send(coinAmnt + " coins have been added to your wallet")
       }

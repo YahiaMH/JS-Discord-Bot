@@ -1,6 +1,6 @@
 const Discord = require('discord.js');
 let User = require('../../schemas/UserSchema')
-let balmngnt = require('../../balManagement');
+let balmgnt = require('../../functions/balManagement');
 const fetch = require("node-fetch");
 const fs = require("fs").promises;
 const talkedRecently = new Set();
@@ -66,7 +66,7 @@ module.exports = {
           console.log("this is the correct answer " + (randAnswer + 1))
           if (randAnswer + 1 == ans.content) {
             const coinAmnt = Math.floor(Math.random() * 101) + 100;
-            balmngnt.add(message.author.id, coinAmnt);
+            balmgnt.add(message.author.id, coinAmnt);
             var randomNum = Math.floor(Math.random() * 4) + 1;
             if (randomNum == 1) {
               message.reply("That was the correct answer!");
@@ -237,11 +237,11 @@ module.exports = {
         message.channel.send(winnerEmbed)
         if (i > s) {
           const coinAmnt = Math.floor(Math.random() * 101) + 200;
-          balmngnt.add(message.author.id, coinAmnt);
+          balmgnt.add(message.author.id, coinAmnt);
           message.channel.send("Congrats on winning <@" + message.author.id + "> you get " + coinAmnt + " Coins!")
         } else {
           const coinAmnt = Math.floor(Math.random() * 101) + 200;
-          balmngnt.add(targetId, coinAmnt);
+          balmgnt.add(targetId, coinAmnt);
           message.channel.send("Congrats on winning <@" + targetId + "> you get " + coinAmnt + " Coins!")
         }
 
